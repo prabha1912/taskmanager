@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Create or Edit Task</title>
+    <link rel="stylesheet" href="/css/style.css"/>
+</head>
+<body>
+<h1 th:text="${task.id==null}? 'Create Task' : 'Edit Task'"></h1>
+
+<form th:action="@{/tasks/save}" th:object="${task}" method="post">
+    <input type="hidden" th:if="${task.id !=null}" th:field="*{id}"/>
+
+    <label>Title: </label></br>
+    <input type="text" th:field="*{title}" required/><br/><br/>
+
+    <label>Description: </label></br>
+    <textarea type="text" th:field="*{description}"></textarea><br><br>
+
+    <label>Status: </label></br>
+    <select th:field="*{status}">
+        <option value="Pending">Pending</option>
+        <option value="In Progress">In Progress</option>
+        <option value="Completed">Completed</option>
+    </select><br><br>
+
+    <label>Due Date/Time: </label></br>
+    <input type="datetime-local"
+           name="dueDateTime"
+           th:value="${#temporals.format(task.dueDateTime, 'yyyy-MM-dd''T''HH:mm')}" /><br><br>
+
+    <button type="submit">Save</button>
+    <a href="/tasks">Cancel</a>
+</form>
+</body>
+</html>

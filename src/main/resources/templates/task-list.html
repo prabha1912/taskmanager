@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task List</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+        <h1>All Tasks</h1>
+<a href="/tasks/create"> Create New Task </a>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Due Date/Time</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="task : ${tasks}">
+        <td th:text="${task.id}"></td>
+        <td th:text="${task.title}"></td>
+        <td th:text="${task.description}"></td>
+        <td th:text="${task.dueDateTime}"></td>
+        <td>
+            <a th:href="@{/tasks/edit/{id}(id=${task.id})}">Edit</a>
+            <a th:href="@{/tasks/delete/{id}(id=${task.id})}"
+            onclick="return confirm('Are you sure you want to delelete this task?');">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
