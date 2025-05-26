@@ -2,8 +2,10 @@ package com.example.taskmanager.controller;
 
 import com.example.taskmanager.model.Task;
 import com.example.taskmanager.service.TaskService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -40,8 +42,12 @@ public class HomeController {
     }
 
     @PostMapping("/save")
-    public String saveTask(@ModelAttribute Task task)
+    public String saveTask(@Valid @ModelAttribute Task task, BindingResult result, Model model)
     {
+        if(result.hasErrors())
+        {
+            return "task-form";
+        }
         taskService.createTask(task);
         return "redirect:/tasks";
     }

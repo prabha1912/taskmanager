@@ -37,7 +37,7 @@ public class TaskService {
     }
 
     //update task status
-    public void updateTaskStatus(Long id,String status)
+    public boolean updateTaskStatus(Long id, String status)
     {
         Optional<Task> optionalTask=taskRepository.findById(id);
         if(optionalTask.isPresent())
@@ -45,12 +45,19 @@ public class TaskService {
             Task task=optionalTask.get();
             task.setStatus(status);
             taskRepository.save(task);
+            return true;
         }
+        return false;
     }
 
     //Delete a task
-    public void deleteTask(Long id)
+    public boolean deleteTask(Long id)
     {
-        taskRepository.deleteById(id);
+        Optional<Task> optionalTask=taskRepository.findById(id);
+        if(optionalTask.isPresent()) {
+            taskRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 }
